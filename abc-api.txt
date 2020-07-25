@@ -1,0 +1,16 @@
+ABC Radio appears to be using a service from http://newrelic.com. You can get the ten most recently played tracks across their enabled stations here:
+ 
+http://music.abcradio.net.au/api/v1/plays/search.json
+ 
+Or you can add these parameters (as their web apps do to generate playlists):
+ 
+from=yyyy-mm-ddThh:mm:ss.000Z   // Date range start in UTC e.g. 2014-04-30T00:00:00.000Z
+to=yyyy-mm-ddThh:mm:ss.000Z     // Date range end in UTC e.g. 2014-04-30T00:00:00.000Z
+limit=                          // Number of records (default 10)
+offset=                         // Record number to begin from (default 0)
+page=                           // Page number of records to begin from (default 0)
+station=                        // Station ID. If omitted, gives results from all stations. Known valid IDs are jazz,dig,doublej,unearthed,country,triplej,classic
+ 
+Sample: http://music.abcradio.net.au/api/v1/plays/search.json?from=2014-04-30T03:00:00.000Z&limit=10&offset=0&page=0&station=doublej&to=2014-04-30T03:16:00.000Z
+ 
+Sorting doesn't appear to be supported (e.g. sort=played_time+asc, which worked on the old Dig SOLR search)

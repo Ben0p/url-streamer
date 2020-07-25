@@ -1,0 +1,10 @@
+[Unit]
+Description=FM Radio Streamer
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /usr/local/bin/fm-stream
+
+[Install]
+WantedBy=multi-user.target

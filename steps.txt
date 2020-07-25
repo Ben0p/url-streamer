@@ -1,0 +1,48 @@
+(odroid 18.04 base image)
+
+
+
+1. Set time manually
+    1a. dpkg-reconfigure tzdata
+    1b. date -s mm/dd/yy
+    1c. date -s hh:mm:ss
+2. Update
+    2a. apt-get update
+    2b. apt-get upgrade
+0. Edit NTP
+    0a. apt-get install -y ntp
+    0b. timedatectl set-timezone Australia/Perth
+    0c. nano /etc/ntp.conf
+    0c. service ntp stop
+    0d. ntpd -gq
+    0e. service ntp start
+    0f. hwclock -w
+1. Filezilla script
+    1a. Transfer fm-stream.py and env to /usr/local/bin
+    1b. Rename fm-stream.py to fm-stream
+    1c. Change the script to import the stream url of choice in env/
+        1ci. from env.mmm_karratha import env
+2. Filezilla unit file
+    2a Tranfer fm-stream.service to /lib/systemd/system/
+    2b Set permission to 644
+3. Putty enable service
+    3a systemctl daemon-reload
+    3b systemctl enable fm-stream.service
+4. Install mongodb
+    4a apt-get update
+    4b apt-get install -y mongodb
+5. Configure mongodb
+    5a nano /etc/mongodb.conf
+    5b bind_ip = 0.0.0.0
+    5c systemctl restart mongodb
+6. Install python 3 packages
+    6a apt-get -y install python3-pip
+    6b pip3 install pymongo
+    6c pip3 install python-vlc
+7. Install vlc
+    7a apt install -y vlc
+8. 
+8. Start service 
+    7a service fm-stream start
+    7b service fm-stream status
+

@@ -1,0 +1,73 @@
+Running x11vnc as service:
+    https://askubuntu.com/questions/229989/how-to-setup-x11vnc-to-access-with-graphical-login-screen/
+
+
+FM STREAMER:
+Put scripts in:
+    /usr/local/bin
+
+
+Unit File:
+    sudo vi /lib/systemd/system/fm-stream.service
+
+
+Unit file contents:
+[Unit]
+Description=FM Radio Streamer
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3.6 /usr/local/bin/fm-stream
+
+[Install]
+WantedBy=multi-user.target
+
+
+Set permission:
+    sudo chmod 644 /lib/systemd/system/fm-stream.service
+
+
+Reload systemd:
+    sudo systemctl daemon-reload
+
+Enable service:
+    sudo systemctl enable fm-stream.service
+
+
+INSTALLING mongodb
+https://linoxide.com/linux-how-to/install-mongodb-ubuntu/
+
+EVENT CALLBACKS
+https://stackoverflow.com/questions/3595649/vlc-python-eventmanager-callback-type
+
+events:
+    MediaPlayerMediaChanged
+    MediaPlayerNothingSpecial
+    MediaPlayerOpening
+    MediaPlayerBuffering
+    MediaPlayerPlaying
+    MediaPlayerPaused
+    MediaPlayerStopped
+    MediaPlayerForward
+    MediaPlayerBackward
+    MediaPlayerEndReached
+    MediaPlayerEncounteredError
+    MediaPlayerTimeChanged
+    MediaPlayerPositionChanged
+    MediaPlayerSeekableChanged
+    MediaPlayerPausableChanged
+    MediaPlayerTitleChanged
+    MediaPlayerSnapshotTaken
+    MediaPlayerLengthChanged
+    MediaPlayerVout
+    MediaPlayerScrambledChanged
+    MediaPlayerESAdded
+    MediaPlayerESDeleted
+    MediaPlayerESSelected
+    MediaPlayerCorked
+    MediaPlayerUncorked
+    MediaPlayerMuted
+    MediaPlayerUnmuted
+    MediaPlayerAudioVolume
+    MediaPlayerAudioDevice

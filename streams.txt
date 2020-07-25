@@ -1,0 +1,17 @@
+
+Greatest Hits:
+    url = "https://wz3web.scahw.com.au:443/live/3greatesthits_32.stream/playlist.m3u8"
+    ip = 10.63.30.24
+    tx = 105.9 mhz
+MMM Karatha:
+    url = "https://wz6web.scahw.com.au:443/live/6ka_32.stream/playlist.m3u8"
+    ip = 10.63.30.22
+    tx = 99.5 mhz
+ABC News:
+    url = "http://www.abc.net.au/res/streaming/audio/mp3/"
+    ip = 10.63.30.21
+    tx = 
+JJJ WA:
+    url = "http://live-radio01.mediahubaustralia.com/6TJW/mp3/"
+    ip = 10.63.30.23
+    tx = 
