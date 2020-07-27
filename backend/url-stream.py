@@ -9,16 +9,45 @@ import pymongo
 client = pymongo.MongoClient(f"mongodb://{env['mongodb_ip']}:{env['mongodb_port']}/")
 db = client[env['database']]
 
-def play(station, url):
+def play():
 
     state = "Stopped"
+    p = ''
+    url = ''
+    station = ''
+
+    restart_timer = 0
+    restart_after = 4320 # x5sec = 6 hours
 
     while True:
+        
+        restart_timer += 1
+
+        # Get info from local DB
+        info = db['fm_live'].find(sort=[("changed", pymongo.DESCENDING)])
+        info = info[0]
+        current_url = info['url']
+
+        if current_url != url:
+            url = current_url
+            station = info['station']
+            state = 'URL Changed'
+            print("URL Changed")
+        
+        if restart_timer > restart_after:
+            restart_timer = 0
+            state = "Restart Timer"
+            print("Reached restart time")
+
 
         timestamp = f"{time.strftime('%d/%m/%Y %X')}"
         unix = time.time()
 
         if state != "Playing":
+            try:
+                p.stop()
+            except:
+                pass
             try:
                 inst = vlc.Instance() # Create a VLC instance
                 p = inst.media_player_new() # Create a player instance
@@ -31,11 +60,12 @@ def play(station, url):
 
                 db['fm_live'].find_one_and_update(
                     {
-                        'station' : station,
+                        'changed' : info['changed'],
                     },
                     {
                         '$set': {
                             'station' : station,
+                            'url' : url,
                         },
                         '$inc' : {
                             'restarts' : 1
@@ -64,9 +94,10 @@ def play(station, url):
         except AttributeError:
             pass
 
+
         db['fm_live'].find_one_and_update(
             {
-                'station' : station,
+                'changed' : info['changed'],
             },
             {
                 '$set': {
@@ -87,16 +118,7 @@ def play(station, url):
 
         time.sleep(5)
 
-def getStation():
-
-    info = db['fm_live'].find()
-    station = info[0]['station']
-    url = info[0]['url']
-
-    return(station, url)
 
 if __name__ == "__main__":
 
-    station, url = getStation()
-
-    play(station, url)
+    play()
